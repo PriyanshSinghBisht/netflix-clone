@@ -11,17 +11,16 @@ import {Route, BrowserRouter , Routes} from 'react-router-dom';
 const App = () =>{
     
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/netflix-clone'>
      <div >
           <Routes>
               <Route path='/' element={<In />} />
-         
-              <Route path='home' element={<Home />} />
-              <Route path='tvShows' element={<TvShows />} />
-              <Route path='movies' element={<Movies />} />
-              <Route path='recentlyAdded' element={<RecentyAdded />} />
-              <Route path='myList' element={<MyList />} />
-              <Route path='search' element={<Search  />} />
+              <Route path='/home' element={<Home />} />
+              <Route path='/tvShows' element={<TvShows />} />
+              <Route path='/movies' element={<Movies />} />
+              <Route path='/recentlyAdded' element={<RecentyAdded />} />
+              <Route path='/myList' element={<MyList />} />
+              <Route path='/search' element={<Search  />} />
           </Routes>
     </div>
     </BrowserRouter>

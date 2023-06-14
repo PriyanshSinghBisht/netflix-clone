@@ -14,6 +14,7 @@ const RecentyAdded = () => {
   };
 
   useEffect(()=>{
+
     fetch(`https://api.themoviedb.org/3/trending/all/day?language=en-US&page=${page}`, options)
       .then(response => response.json())
       .then(response => response.results)
