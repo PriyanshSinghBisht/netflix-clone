@@ -36,11 +36,11 @@ const In = () => {
 
              <div className='bg-black w-full gg:pt-5 pt-20 pb-10 min-[1280px]:pl-[150px] pl-10 min-[1280px]:pr-[50px] pr-10'>
                <div className=' min-h-[500px] flex justify-center items-center min-[980px]:flex-row flex-col'>
-                    <div className=' flex-1 '>
+                    <div className=' flex-1 min-[500px]:max-h-auto max-h-[150px] '>
                          <h2 className='gg:text-start text-center gg:text-[40px] text-[35px] text-white font-bold'>Enjoy on your TV</h2>
                          <h1 className='gg:text-start text-center gg:text-[22px] text-[19px] gg:my-3 my-0 text-white'>Watch on smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players and more.</h1>
                     </div>
-                    <div className=' min-[980px]:w-1/2 w-full'>
+                    <div className='min-[980px]:w-1/2 w-full'>
                          <img className="w-full h-full object-fill" src={Tv1} alt="" />
                     </div>
                </div>

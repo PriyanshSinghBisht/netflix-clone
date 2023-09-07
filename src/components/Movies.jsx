@@ -10,7 +10,7 @@ const Movies = () => {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOGY3MTg2MmQ0ODE2NDI5NDliMzQ1NDIyYWJjNzI0NiIsInN1YiI6IjY0NzM2ZDlkZGQ3MzFiMmQ3NjJiNzI5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-6klEYQifWk03pnEL92TJ7Vk0zXImYsGN9mUENJxMLA'
+        Authorization: import.meta.env.VITE_TMDB_API_AUTH
       }
     };
     

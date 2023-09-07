@@ -7,16 +7,45 @@ import {HiOutlineQuestionMarkCircle} from 'react-icons/hi';
 import Profile from '../assets/netflix-profile.jpg';
 import { useState } from 'react';
 import {motion} from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, NavLink,useLocation } from 'react-router-dom';
 import {AiOutlineClose} from 'react-icons/ai';
 import {FiMenu} from 'react-icons/fi';
+import {  useEffect } from 'react';
+import {AiFillHome} from 'react-icons/ai';
+import{FaTv} from 'react-icons/fa';
+import {BiCameraMovie} from 'react-icons/bi';
+import {AiOutlinePlus, AiOutlineArrowLeft}  from 'react-icons/ai';
+import { useParams, } from 'react-router-dom';
 
 const Navbar = () => {
+    const {name} = useParams();
+    const isDynamic = !!name;
     const [drop, setDrop] = useState(false);
     const [toogle, setToogle] = useState(false);
+    const [backgroundColor,setBC] = useState(false);
+    const location = useLocation();
+    const isActiveLink = (to)=>{
+        return !!(location.pathname===to);
+    }
+
+    useEffect(()=>{
+      const handle = (e)=>{
+        if( window.scrollY > 87)
+              setBC(true);
+        else
+              setBC(false);
+   };
+         window.addEventListener( "scroll" , handle);
+
+         return ()=>{
+          window.removeEventListener("scroll",handle);
+         };
+  },[]);
   return (
-    <div className=' select-none nav flex font-bold bg-bt justify-center items-center'>
-          <div className='relative gg:hidden'>
+   <div>
+    <div className={`select-none nav flex font-bold bg-bt justify-center items-center ${!backgroundColor?'nav-toogle':''}`}>
+    <div className={`${isDynamic?null:"hidden"} rounded-full hover:bg-[#222] text-white gg:ml-12 ml-5 text-[30px]`} onClick={()=>history.back()}><AiOutlineArrowLeft/></div>
+          <div className='relative gg:hidden max-[500px]:hidden '>
               <div onClick={()=>setToogle(!toogle)} className='ml-5 flex text-white text-[30px]'>
                      {toogle?<AiOutlineClose/>:<FiMenu/>}
                </div> 
@@ -28,9 +57,11 @@ const Navbar = () => {
                    <li> <Link to="/myList" > My List</Link></li>
              </ul>
              </div>
-          <div className='max-[959px]:flex-1'>
-            <img className=' min-[425px]:h-[43px] h-[35px] w-auto mt-6 gg:ml-12 ml-5 mb-5 mr-5' src={Netflix} alt="Netflix-folo" />
-            </div>
+          <div className=' max-[959px]:flex-1 select-none'>
+            <Link to="/home" >
+            <img className=' min-[425px]:h-[43px] h-[35px] w-auto mt-6 gg:ml-12 ml-5 mb-5 mr-5' src={Netflix} alt="Netflix-folo" 
+             onClick={(event)=>event.stopPropagation()}/></Link>
+             </div>
         <ul className='flex-1 gg:flex hidden items-center text-[18px]'>
            <li><Link to="/home" >Home</Link></li>
            <li><Link to="/tvShows">Tv Shows</Link></li>
@@ -52,8 +83,28 @@ const Navbar = () => {
                         <a href="/netflix-clone/" className='flex text-[18px] items-center p-3 text-center'> <span>Sign out of Netflix</span> </a>
                    </div>
               </div>
-               </div>
-
+         </div>
+      </div>
+         <div className='min-[500px]:hidden fixed bottom-0 left-0 z-[50] bg-[rgba(0,0,0,1)] w-full' >
+            <ul className='flex justify-around btm-nav'>
+                 <li>
+                   <NavLink to='/home' className="navlink"><div className={`flexCenter ${isActiveLink('/home')?"bg-white text-black":null} pt-2  flex-col w-full h-full`} >
+                        <AiFillHome/><h1>Home</h1>
+                        </div></NavLink></li>
+                  <li>
+                  <NavLink to='/tvShows' className="navlink"><div className={`flexCenter ${isActiveLink('/tvShows')?"bg-white text-black":null}  pt-2 flex-col w-full h-full`} >
+                        <FaTv/><h1>Tv Shows</h1>
+                        </div></NavLink></li>
+                  <li>
+                  <NavLink to='/movies' className="navlink"><div className={`flexCenter ${isActiveLink('/movies')?"bg-white text-black":null} pt-2  flex-col w-full h-full`} >
+                        <BiCameraMovie/><h1>Movies</h1>
+                        </div></NavLink></li>
+                  <li>
+                  <NavLink to='/myList' className="navlink"><div className={`flexCenter ${isActiveLink('/myList')?"bg-white text-black":null}  pt-2  flex-col w-full h-full`} >
+                        <AiOutlinePlus/><h1>My List</h1>
+                        </div></NavLink></li>
+            </ul>
+         </div>
     </div>
   )
 }

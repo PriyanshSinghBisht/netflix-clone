@@ -2,7 +2,7 @@ import LangOpc from "./LangOpc"
 
 const Footer = () => {
   return (
-    <div className='flex flex-col text-mywhite min-[1280px]:m-auto mx-10 max-w-[1200px] pb-10 '>
+    <div className='max-[500px]:pb-[70px] flex flex-col text-mywhite min-[1280px]:m-auto mx-10 max-w-[1200px] pb-10 '>
 
                     <h1 className=' text-[12px] my-10'>Questions? Call <a>000-800-919-1694</a></h1>        
                     <div className='flex flex-row gg:justify-between'>

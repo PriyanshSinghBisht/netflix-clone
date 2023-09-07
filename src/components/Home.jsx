@@ -17,13 +17,12 @@ const Home = () => {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization:  'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOGY3MTg2MmQ0ODE2NDI5NDliMzQ1NDIyYWJjNzI0NiIsInN1YiI6IjY0NzM2ZDlkZGQ3MzFiMmQ3NjJiNzI5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-6klEYQifWk03pnEL92TJ7Vk0zXImYsGN9mUENJxMLA'
+        Authorization:  import.meta.env.VITE_TMDB_API_AUTH
       }
     };
 
     useEffect(()=>{   
   // api calls for movies & tv shows data
-
     fetch('https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=1', options)
       .then(response => response.json())
       .then(response => { setForYou(response.results);} )
@@ -59,7 +58,6 @@ const Home = () => {
     .then(response => response.json())
     .then(response => { setNew(response.results);})
     .catch(err => console.error(err));
-
   },[])
   return (
     <div className='flex flex-col bg-zinc-900'>

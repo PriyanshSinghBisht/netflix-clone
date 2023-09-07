@@ -6,13 +6,22 @@ import Movies from './components/Movies';
 import RecentyAdded from './components/RecentyAdded';
 import MyList from './components/MyList';
 import Search from './components/Search';
-import {Route, BrowserRouter , Routes} from 'react-router-dom';
+import Detail from './components/Detail';
+import {Route ,HashRouter, Routes} from 'react-router-dom';
+import { DetailProvider } from './components/DP';
 
 const App = () =>{
-    
+     if(localStorage.getItem("myMovieList")===null){ 
+        localStorage.setItem("myMovieList",JSON.stringify([]));
+        localStorage.setItem("myTvList",JSON.stringify([]));
+     }
+    //  localStorage.clear();
+  
   return (
-    <BrowserRouter basename='/netflix-clone'>
-     <div >
+    <HashRouter basename='/'>
+      <DetailProvider>
+      <div className='w-full bg-black'>
+     <div className='max-w-[1550px] m-auto'>
           <Routes>
               <Route path='/' element={<In />} />
               <Route path='/home' element={<Home />} />
@@ -21,9 +30,12 @@ const App = () =>{
               <Route path='/recentlyAdded' element={<RecentyAdded />} />
               <Route path='/myList' element={<MyList />} />
               <Route path='/search' element={<Search  />} />
+              <Route path='/:name' element={< Detail  />} />
           </Routes>
     </div>
-    </BrowserRouter>
+    </div>
+      </DetailProvider>
+    </HashRouter>
   )
 }
 

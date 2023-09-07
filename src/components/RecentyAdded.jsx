@@ -9,13 +9,13 @@ const RecentyAdded = () => {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOGY3MTg2MmQ0ODE2NDI5NDliMzQ1NDIyYWJjNzI0NiIsInN1YiI6IjY0NzM2ZDlkZGQ3MzFiMmQ3NjJiNzI5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-6klEYQifWk03pnEL92TJ7Vk0zXImYsGN9mUENJxMLA'
+      Authorization: import.meta.env.VITE_TMDB_API_AUTH
     }
   };
 
   useEffect(()=>{
 
-    fetch(`https://api.themoviedb.org/3/trending/all/day?language=en-US&page=${page}`, options)
+    fetch(`https://api.themoviedb.org/3/trending/all/week?language=en-US&page=${page}`, options)
       .then(response => response.json())
       .then(response => response.results)
       .then(results => setMovie((prev)=> [ ...prev,...results]))
