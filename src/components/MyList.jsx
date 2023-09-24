@@ -25,10 +25,6 @@ const MyList = () => {
    }
    )
 
-   useEffect(()=>{
-      console.log(movies);
-      console.log(Tv);
-   },[]);
   return (
     <div>
         <Navbar/>
@@ -54,7 +50,7 @@ const MyList = () => {
               movies.map((id, index)=>{
                 return(
                     <>
-                    <MyListCard key={index} id={id} cat={'M'} handleChangeList={handleChangeList} />
+                    <MyListCard key={id} id={id} cat={'M'} handleChangeList={handleChangeList} />
                     </>
               )})}
             </div>
