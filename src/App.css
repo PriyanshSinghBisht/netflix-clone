@@ -218,3 +218,20 @@ a:hover{
         left: 100%;
      }
 } 
+
+.loading{
+    background: linear-gradient(45deg , #eae0e0, #c5bac5);
+    animation: load 3s infinite ease-in;
+    position: relative;
+}
+.loading::before{
+     content: "";
+     width: 100%;
+     height: 100%;
+     background: linear-gradient(45ded , #fff, rgba(0,0,0,0));
+}
+@keyframes load {
+    0%{
+        background: linear-gradient(45deg , #f0f1e1, #efe4e4);
+    }
+}

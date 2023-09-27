@@ -27,7 +27,12 @@ const MovieCard = ({movie}) => {
          return () => {
            window.removeEventListener('resize', handleWindowResize);
          };
-       });
+       },[]);
+       
+       useEffect(()=>{
+        console.log(movie)   
+       },[movie]);
+       
 
   return (
     <div>

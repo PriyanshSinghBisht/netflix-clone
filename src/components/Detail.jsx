@@ -114,37 +114,40 @@ const Detail = () => {
     setList(Array.from(set));
     setAddBtn(Array.from(set).includes(data.id));
   };
-   
+  
     return (
       <div className=" bg-[#333]">
         <Navbar />
-        {data && (
+        
           <div className="relative pt-[87px] max-[964px]:h-auto  bg-black ">
             <div className="relative">
-              <div className="w-full bg-slate-400 aspect-3/2">
+              <div className="w-[100vw] h-[66vw]  bg-slate-800">
+                { data && 
                 <img
                   className="w-full h-full object-fill"
                   src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`}
                 />
+              }
               </div>
-              <div className="absolute w-[25vw] max-h-[90%] gg:right-[10%] right-[5%] min-[1600px]:w-[450px] max-[960px]:w-[200px] max-[960px]:bottom-[-100px] max-[500px]:w-[150px] max-[400px]:w-[35%] bottom-20">
-          
+              <div className="absolute shadow-2xl  bg-gray-800 w-[25vw] min-h-[39vw] gg:right-[10%] right-[5%] min-[1600px]:w-[450px] max-[960px]:w-[200px] max-[960px]:bottom-[-100px] max-[500px]:w-[150px] max-[400px]:w-[35%] bottom-20">
+            { data &&
                 <img
                   className="w-full h-full object-fill"
                   src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`}
                 />
-            
+          }
               </div>
             </div>
             <div className="gg:pl-[10%] px-5 pt-5 flex-1  pb-10 bg-left-black flex justify-center flex-col text-white gg:absolute left-0 right-[40vw] gg:top-0 top-1/2 h-1/2 gg:h-full">
               <h1 className="f9  gg:text-[70px] min-[500px]:text-[40px] text-[30px]  relative">
-                {data.title ? data.title : data.name}
+                {data && (data.title ? data.title : data.name) }
               </h1>
               <div className="flex my-3 text-[#ccc] font-bold text-[16px] relative">
                 <span>
-                  {data.release_date ? data.release_date : data.first_air_date}
+                  { data && (data.release_date ? data.release_date : data.first_air_date)}
                 </span>
-                {(data.runtime || data.episode_run_time?.length == 1) && (
+             { data &&
+                (data.runtime || data.episode_run_time?.length == 1) && (
                   <span className="pl-2 ml-2 border-left-white">
                     {data.episode_run_time
                       ? `${data.episode_run_time} m `
@@ -156,16 +159,18 @@ const Detail = () => {
                               } m`
                         }`}
                   </span>
-                )}
-
-                {data.genres && data.genres[0] ? (
+                )
+            }
+                {
+                data &&  data.genres && data.genres[0] && (
                   <div className="pl-2 ml-2 border-left-white ">
                     {data.genres[0].name}{" "}
                   </div>
-                ) : null}
+                ) 
+              }
               </div>
               <p className=" font-[800] gg:text-[20px] text-[15px] relative">
-                {data.overview}
+                {data && data.overview}
               </p>
               <div className="flex my-5 ">
                 {/* myAdd list btn */}
@@ -188,7 +193,9 @@ const Detail = () => {
               </div>
             </div>
           </div>
-        )}
+      
+
+
         <div className=" gg:p-10 min-[500px]:p-5 p-2s text-white bg-[#333] min-h-[100vh]">
           <h1 className="text-white pl-2 border-l-4 ml-2 mt-4 mb-2 f9 border-l-blue-700 text-[30px]">
             Details
