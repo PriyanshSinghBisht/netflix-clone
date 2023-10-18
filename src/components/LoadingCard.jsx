@@ -11,7 +11,7 @@ const LoadingCard = () => {
                            <div className='w-full h-full loading text-white'></div>
                          </div>
                          <div className='absolute bottom-0 left-0  w-full'>
-                              <div className=' h-4 m-2  bg-gray-400'/>
+                                 <div className=' h-4 m-2  bg-gray-400'/>
                               <div className=' h-3 my-2 ml-2 mr-8 bg-gray-400'/>
                            </div>
                            

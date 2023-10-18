@@ -19,7 +19,7 @@ const MovieList = ({data, caption}) => {
        return (
           <div>
                <h2 className='pl-2 border-l-4 border-l-red-500  min-[500px]:mt-10 mt-5  min-[500px]:ml-10  ml-5 text-white font-black min-[800px]:text-[30px] text-[20px]'>{caption}</h2>
-               <div className='relative flex my-3 min-[700px]:mx-10 min-[500px]:mx-5 mx-2 py-0'>
+               <div className='relative flex my-3 min-[700px]:mx-10 min-[500px]:mx-5 mx-2 py-0 overflow-hidden'>
                   <LoadingCard/>
                   <LoadingCard/>
                   <LoadingCard/>

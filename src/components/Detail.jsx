@@ -121,7 +121,7 @@ const Detail = () => {
         
           <div className="relative pt-[87px] max-[964px]:h-auto  bg-black ">
             <div className="relative">
-              <div className="w-[100vw] h-[66vw]  bg-slate-800">
+              <div className="w-[100vw] aspect-video  bg-slate-800">
                 { data && 
                 <img
                   className="w-full h-full object-fill"
@@ -129,7 +129,7 @@ const Detail = () => {
                 />
               }
               </div>
-              <div className="absolute shadow-2xl  bg-gray-800 w-[25vw] min-h-[39vw] gg:right-[10%] right-[5%] min-[1600px]:w-[450px] max-[960px]:w-[200px] max-[960px]:bottom-[-100px] max-[500px]:w-[150px] max-[400px]:w-[35%] bottom-20">
+              <div className="absolute shadow-2xl  bg-gray-800 w-[25vw] min-h-[37vw] gg:right-[10%] right-[5%] min-[1600px]:w-[450px] max-[960px]:w-[200px] max-[960px]:bottom-[-100px] max-[500px]:w-[150px] max-[400px]:w-[35%] bottom-20">
             { data &&
                 <img
                   className="w-full h-full object-fill"
