@@ -22,7 +22,7 @@ const Navbar = () => {
     const isDynamic = !!name;
     const [drop, setDrop] = useState(false);
     const [toogle, setToogle] = useState(false);
-    const [backgroundColor,setBC] = useState(false);
+    const [backgroundColor,setBC] = useState(true);
     const location = useLocation();
     const isActiveLink = (to)=>{
         return !!(location.pathname===to);
@@ -31,9 +31,9 @@ const Navbar = () => {
     useEffect(()=>{
       const handle = (e)=>{
         if( window.scrollY > 87)
-              setBC(true);
-        else
               setBC(false);
+        else
+              setBC(true);
    };
          window.addEventListener( "scroll" , handle);
 
@@ -49,7 +49,7 @@ const Navbar = () => {
               <div onClick={()=>setToogle(!toogle)} className='ml-5 flex text-white text-[30px]'>
                      {toogle?<AiOutlineClose/>:<FiMenu/>}
                </div> 
-               <ul className={`${toogle?'flex':'hidden'} items-center Mnav text-[18px] rounded-lg  bg-black border-2 border-red-50 z-50 flex-col absolute top-[40px] left-4`}>
+               <ul className={`${toogle?'flex':'hidden'} items-center Mnav text-[18px] rounded-lg  bg-black  border-2 border-red-50 z-50 flex-col absolute top-[40px] left-4`}>
                    <li><Link to="/home" >Home</Link></li>
                    <li><Link to="/tvShows">Tv Shows</Link></li>
                    <li> <Link to="/movies" > Movies</Link></li>

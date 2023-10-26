@@ -20,6 +20,7 @@ const App = () =>{
   return (
     <HashRouter basename='/'>
       <DetailProvider>
+
       <div className='w-full bg-black'>
      <div className='max-w-[1550px] m-auto'>
           <Routes>

@@ -43,8 +43,8 @@ const Detail = () => {
         setData(result); //console.log(result); return result;
       })
       .then((result) => {
-        const Top = window.innerWidth <= 500 ? 0 : 90;
-        window.scrollTo({ top: Top, behavior: "instant" });
+        // const Top = window.innerWidth <= 500 ? 0 : 90;
+        window.scrollTo({ top: 0, behavior: "instant" });
       })
       .catch((err) => console.error(err));
     //youtube video
@@ -116,12 +116,12 @@ const Detail = () => {
   };
   
     return (
-      <div className=" bg-[#333]">
+      <div className=" bg-[#333] overflow-x-hidden">
         <Navbar />
         
-          <div className="relative pt-[87px] max-[964px]:h-auto  bg-black ">
+          <div className="relative max-[964px]:h-auto  bg-black ">
             <div className="relative">
-              <div className="w-[100vw] aspect-video  bg-slate-800">
+              <div className="w-[100vw] max-h-[100vh] aspect-video  bg-slate-800">
                 { data && 
                 <img
                   className="w-full h-full object-fill"

@@ -103,9 +103,9 @@ const In = () => {
                   </div>
 
 
-               <InputButton bg={'bg-[rgba(150,0,0,0.1)]'}/>
+               <InputButton bg={'bg-[rgba(150,0,0,0.1)] text-white' }/>
                 <div className='pt-8'> 
-               <HorazointalRow />
+               <HorazointalRow />fa
                 </div>
                <Footer/>
           </div>

@@ -88,7 +88,7 @@ input:focus ~.label{
     z-index: 10;
 }
 .nav-toogle{
-    background: rgba(0,0,0,0.6 );
+    background: rgba(0,0,0,0.1);
 }
 .bg-right-bt{
     background: linear-gradient(to right, rgba(0,0,0,0.6) 50% , rgba(0,0,0,0));
@@ -143,12 +143,12 @@ a:hover{
 }
 @media (min-width:950px){
 .bg-left-black{
-    background: linear-gradient(to right, rgba(25,25,25,0.9) 70% , rgba(30,30,30,0.9) , rgba(0,0,0,0));
+    background: linear-gradient(to right, rgba(25,25,25,0.7) 70% , rgba(30,30,30,0.4) , rgba(0,0,0,0));
 }
 }
 @media (max-width:959px){
     .bg-left-black{
-        background: linear-gradient(to right, rgba(25,25,25,0.9) 50% , rgba(30,30,30,0.9) , rgba(0,0,0,0)); ;
+        background: linear-gradient(to right, rgba(25,25,25,0.7) 50% , rgba(30,30,30,0.4) , rgba(0,0,0,0)); ;
         border-bottom: 1px solid white;    
     }
 }
@@ -221,17 +221,26 @@ a:hover{
 
 .loading{
     background: linear-gradient(45deg , #eae0e0, #c5bac5);
-    animation: load 3s infinite ease-in;
     position: relative;
+    overflow: hidden;
 }
 .loading::before{
      content: "";
-     width: 100%;
-     height: 100%;
-     background: linear-gradient(45ded , #fff, rgba(0,0,0,0));
+     position: absolute;
+     top: -100%;
+     left: -100%;
+     width: 150%;
+     height: 150%;
+    background: linear-gradient(-45deg , rgba(255,255,255,0) 30%, hsl(0, 22%, 76%) 35% 60%, rgba(255,255,255,0) 70%);
+    animation: load 2s linear infinite;
 }
 @keyframes load {
     0%{
-        background: linear-gradient(45deg , #f0f1e1, #efe4e4);
+        top: -100%;
+        left: -100%;
+     }
+    100%{
+       top: 100%;
+       left: 100%;
     }
 }
