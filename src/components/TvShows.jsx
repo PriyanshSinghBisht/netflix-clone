@@ -2,6 +2,7 @@ import Navbar from "./Navbar"
 import GridList from "./GridList"
 import { useState, useEffect } from "react"
 
+
 const TvShows = () => {
   const [movie, setMovie] = useState([]);
   const [page, setPage] = useState(1);
@@ -38,7 +39,8 @@ const TvShows = () => {
       <div className=" pt-[100px] bg-zinc-900 ">
           <Navbar/>
           <div>
-              <GridList caption='Tv Shows List' Data={movie} cat='tvShows'  />   
+              <GridList caption='Tv Shows List' Data={movie} cat='tvShows'  />  
+            
           </ div>
     </div>
   )

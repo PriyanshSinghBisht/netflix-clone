@@ -75,7 +75,7 @@ const Navbar = () => {
                <h1 className='text-red-900 line-through  max-[425px]:hidden m-4 cursor-pointer text-wt '>DVD</h1>
               <div className=' select-none m-4 text-white text-[25px] flex flex-col items-center' onClick={()=>setDrop(!drop)}>
                   <div className='flex justify-items-center'> <motion.img className='h-8' src={Profile} alt="profile-logo" /> <RiArrowDropDownFill className={`${drop?'rotate-180':'rotate-0'}`} /> </div>
-                   <div className={` ${drop? 'flex': 'hidden'} flex-col bg-[rgba(0,0,0,0.8)] absolute top-[100px] right-[10px] z-2`}>
+                   <div className={` ${drop? 'flex': 'hidden'} flex-col bg-[rgba(0,0,0,0.8)] backdrop-blur-lg absolute top-[100px] right-[10px] z-2`}>
                         <a href="#" className=' text-red-900 line-through  flex text-[18px] items-center p-2'> < LuPencil className=' line-through mr-4 font-bold h-7 w-auto'/> <span>Manage Profiles</span> </a>
                         <a href="#" className='text-red-900 line-through flex text-[18px] items-center p-2'> < AiOutlineUser className='mr-4 font-bold h-7 w-auto'/> <span>Account</span> </a>
                         <a href="#" className=' text-red-900 line-through  flex text-[18px] items-center p-2'> < HiOutlineQuestionMarkCircle className='mr-4 font-bold h-7 w-auto'/> <span>Help Center</span> </a>
@@ -85,6 +85,8 @@ const Navbar = () => {
               </div>
          </div>
       </div>
+
+      {/* navbar for screen devices  */}
          <div className='min-[500px]:hidden fixed bottom-0 left-0 z-[50] bg-[rgba(0,0,0,1)] w-full' >
             <ul className='flex justify-around btm-nav'>
                  <li>

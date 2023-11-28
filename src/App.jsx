@@ -10,6 +10,7 @@ import Detail from './components/Detail';
 import {Route ,HashRouter, Routes} from 'react-router-dom';
 import { DetailProvider } from './components/DP';
 
+
 const App = () =>{
      if(localStorage.getItem("myMovieList")===null){ 
         localStorage.setItem("myMovieList",JSON.stringify([]));

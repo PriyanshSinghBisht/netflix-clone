@@ -1,11 +1,12 @@
 import CardGrid from "./CardGrid";
 import { useState } from "react";
 import {GrClose} from 'react-icons/gr';
+import Loader from '../Loader/Loader'
 
 const GridList = ({caption, Data , cat}) => {
 console.log(Data);
   return (
-    <div className=" overflows-scroll h-200px pb-[300px]">
+    <div className=" overflows-scroll h-200px">
         <h2 className='ml-5 gg:text-[40px] min-[500px]:text-[35px] text-[30px] font-black text-white'>{caption}</h2>
         <div className="grid mt-0 min-[600px]:mx-5 mx-2  min-[1070px]:grid-cols-4 gg:grid-cols-3 min-[700px]:grid-cols-4 grid-cols-3 ">
                  {
@@ -21,6 +22,7 @@ console.log(Data);
                     }})
                  }
              </div>
+             <Loader />
     </div>
   )
 }

@@ -9,6 +9,15 @@ export default {
       aspectRatio: {
         '2/3': '2 / 3',
       },
+      animation:{
+        rotate: 'rotate 1s linear infinite',
+      },
+      keyframes:{
+         rotate:{
+           from:{rotate: '0deg'},
+           to: {rotate: '360deg'}
+         },
+      }
     },
     screens:{
       'gg': '960px',

@@ -88,7 +88,8 @@ input:focus ~.label{
     z-index: 10;
 }
 .nav-toogle{
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(5px);
 }
 .bg-right-bt{
     background: linear-gradient(to right, rgba(0,0,0,0.6) 50% , rgba(0,0,0,0));
