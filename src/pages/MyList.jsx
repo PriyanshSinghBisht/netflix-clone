@@ -1,9 +1,9 @@
-import Footer from "./Footer"
-import Navbar from "./Navbar"
+import Footer from "../components/Footer"
+import Navbar from "../components/Navbar"
 import {AiOutlinePlus} from 'react-icons/ai';
 import {Link} from 'react-router-dom'
 import { useEffect, useState } from "react";
-import MyListCard from "./MyListCard";
+import MyListCard from "../components/MyListCard";
 
 const MyList = () => {
    const [movies, setMovies] = useState( JSON.parse(localStorage.getItem("myMovieList")));

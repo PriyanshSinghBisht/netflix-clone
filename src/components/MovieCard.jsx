@@ -29,10 +29,6 @@ const MovieCard = ({movie}) => {
          };
        },[]);
        
-       useEffect(()=>{
-        console.log(movie)   
-       },[movie]);
-       
 
   return (
     <div>

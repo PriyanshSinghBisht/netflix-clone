@@ -1,8 +1,8 @@
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { FiSearch } from "react-icons/fi";
 import { useEffect, useState } from "react";
-import SearchCard from "./SearchCard";
+import SearchCard from "../components/SearchCard";
 
 const Search = () => {
     const [search, setSearch] = useState('');

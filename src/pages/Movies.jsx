@@ -1,13 +1,12 @@
-import Navbar from "./Navbar"
-import GridList from "./GridList"
+import Navbar from "../components/Navbar";
+import GridList from "../components/GridList"
 import { useState, useEffect } from "react"
 
-
-const TvShows = () => {
+const Movies = () => {
   const [movie, setMovie] = useState([]);
   const [page, setPage] = useState(1);
-
-  useEffect(()=>{   
+  
+  useEffect(()=>{
     const options = {
       method: 'GET',
       headers: {
@@ -15,7 +14,8 @@ const TvShows = () => {
         Authorization: import.meta.env.VITE_TMDB_API_AUTH
       }
     };
-    fetch(`https://api.themoviedb.org/3/tv/popular?language=en-US&page=${page}`, options)
+    
+    fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, options)
       .then(response => response.json())
       .then(response => response.results)
       .then(results => setMovie((prev)=> [ ...prev,...results]))
@@ -36,14 +36,13 @@ const TvShows = () => {
      return ()=> window.removeEventListener('scroll', handleInfiniteScroll); 
   },[]);
   return (
-      <div className=" pt-[100px] bg-zinc-900 ">
+      <div className=" pt-[100px] bg-zinc-900 min-h-[100vh]">
           <Navbar/>
           <div>
-              <GridList caption='Tv Shows List' Data={movie} cat='tvShows'  />  
-            
+              <GridList caption='Movies List' Data={movie} cat='movies' />   
           </ div>
     </div>
   )
 }
 
-export default TvShows
+export default Movies

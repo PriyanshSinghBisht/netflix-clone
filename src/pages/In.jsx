@@ -1,16 +1,16 @@
 import React from 'react'
 import  background from '../assets/netflix-bg.jpg'
 import netflix from '../assets/netflix.png';
-import InputButton from './inputButton';
+import InputButton from '../components/inputButton';
 import Tv2 from '../assets/netflix-tv2.png';
 import Kids from '../assets/netflix-kids.png';
-import HorazointalRow from './HorazointalRow';
+import HorazointalRow from '../components/HorazointalRow';
 import milli from '../assets/netflix-milli.jpg';
 import Tv2__image from '../assets/Tv2-image.jpg';
-import FAQ from './FAQ';
-import { faqObj } from './Rawdata';
-import LangOpc from './LangOpc';
-import Footer from './Footer';
+import FAQ from '../components/FAQ';
+import { faqObj } from '../components/Rawdata';
+import LangOpc from '../components/LangOpc';
+import Footer from '../components/Footer';
 
 const In = () => {
      const Tv1 = 'https://netflix-images.manikantp.repl.co/Netflix1.gif';

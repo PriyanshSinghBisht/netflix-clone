@@ -1,12 +1,12 @@
 import './App.css';
-import In from "./components/In"
-import Home from './components/Home';
-import TvShows from './components/TvShows';
-import Movies from './components/Movies';
-import RecentyAdded from './components/RecentyAdded';
-import MyList from './components/MyList';
-import Search from './components/Search';
-import Detail from './components/Detail';
+import In from "./pages/In"
+import Home from './pages/Home';
+import TvShows from './pages/TvShows';
+import Movies from './pages/Movies';
+import RecentyAdded from './pages/RecentyAdded';
+import MyList from './pages/MyList';
+import Search from './pages/Search';
+import Detail from './pages/Detail';
 import {Route ,HashRouter, Routes} from 'react-router-dom';
 import { DetailProvider } from './components/DP';
 

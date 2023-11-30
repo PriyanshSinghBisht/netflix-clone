@@ -1,5 +1,5 @@
-import Navbar from "./Navbar"
-import GridList from "./GridList"
+import Navbar from "../components/Navbar"
+import GridList from "../components/GridList"
 import { useState, useEffect } from "react"
 
 const RecentyAdded = () => {

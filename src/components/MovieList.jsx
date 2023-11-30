@@ -1,7 +1,7 @@
 import {useState, useRef } from 'react';
 import {AiOutlineRight} from 'react-icons/ai';
 import MovieCard from './MovieCard';
-import LoadingCard  from './LoadingCard';
+import LoadingCard  from '../Loader/LoadingCard';
 
 const MovieList = ({data, caption}) => {
      const scrl = useRef(null);

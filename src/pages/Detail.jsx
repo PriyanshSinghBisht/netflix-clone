@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import MovieList from "./MovieList";
-import CastCard from "./CastCard";
-import ShowMore from "./ShowMore";
+import { useEffect, useCallback, useState } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import MovieList from "../components/MovieList";
+import CastCard from "../components/CastCard";
+import ShowMore from "../components/ShowMore";
 
 const Detail = () => {
   const { id } = useParams();
@@ -24,6 +24,7 @@ const Detail = () => {
 
   // fetching data from extracted info...
   useEffect(() => {
+    
     const options = {
       method: "GET",
       headers: {
@@ -40,7 +41,7 @@ const Detail = () => {
     )
       .then((response) => response.json())
       .then((result) => {
-        setData(result); //console.log(result); return result;
+        setData(result); console.log(result); return result;
       })
       .then((result) => {
         // const Top = window.innerWidth <= 500 ? 0 : 90;
