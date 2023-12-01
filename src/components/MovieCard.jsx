@@ -11,7 +11,7 @@ const MovieCard = ({movie}) => {
           setDetail.setdetail(movie.id , 'T');
       else
           setDetail.setdetail(movie.id , 'M');
-        navigate(`/${ movie.id}?cat=${movie.name?"T":"M"}`);
+        navigate(`/${movie.name?"T":"M"}/${ movie.id}`);
     };
 
        // for window width

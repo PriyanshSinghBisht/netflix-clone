@@ -11,7 +11,7 @@ const CardGrid = ({data , cat }) => {
                 setDetail.setdetail(data.id , 'T');
             else
                 setDetail.setdetail(data.id , 'M');
-              navigate(`/${ data.id}?cat=${ data.name?"T":"M"}`); 
+              navigate(`/${ data.name?"T":"M"}/${ data.id}`); 
          };
 
          // for window window 

@@ -6,23 +6,18 @@ import MovieList from "../components/MovieList";
 import CastCard from "../components/CastCard";
 import ShowMore from "../components/ShowMore";
 
-const Detail = () => {
-  const { id } = useParams();
-  const [cat, setCat] = useState("");
+import Loader from '../Loader/Loader';
+
+const Detail = (props) => {
+  const { id,cat } = useParams();
   const [data, setData] = useState({});
   const [ytData, setYtData] = useState(null);
   const [recom, setRecom] = useState(null);
   const [cast, setCast] = useState(null);
   const [list, setList] = useState([]);
   const [addBtn, setAddBtn] = useState(false);
-
-  // extracting infromation from url
-  useEffect(() => {
-    let url = window.location.hash;
-    setCat(url.split("?")[1].split("=")[1]);
-  }, []);
-
-  // fetching data from extracted info...
+  
+  // fetching movie info
   useEffect(() => {
     
     const options = {
@@ -41,13 +36,10 @@ const Detail = () => {
     )
       .then((response) => response.json())
       .then((result) => {
-        setData(result); console.log(result); return result;
-      })
-      .then((result) => {
-        // const Top = window.innerWidth <= 500 ? 0 : 90;
-        window.scrollTo({ top: 0, behavior: "instant" });
+        setData(result);
       })
       .catch((err) => console.error(err));
+
     //youtube video
     fetch(
       `https://api.themoviedb.org/3/${
@@ -95,14 +87,14 @@ const Detail = () => {
       )
     );
     setAddBtn(
-      JSON.parse(
-        localStorage.getItem(`${cat == "T" ? "myTvList" : "myMovieList"}`)
-      ).includes(data.id)
+      list.includes(data.id)
     );
-    // console.log(list.includes(data.id), list , data.id);
+
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [data]);
 
   const handleAddToList = () => {
+    
     const list = JSON.parse(
       localStorage.getItem(`${data.name ? "myTvList" : "myMovieList"}`)
     );
@@ -119,23 +111,29 @@ const Detail = () => {
     return (
       <div className=" bg-[#333] overflow-x-hidden">
         <Navbar />
-        
-          <div className="relative max-[964px]:h-auto  bg-black ">
+        <div className="sm:hidden flex w-full h-20 blur-[25px]"></div>
+          <div className="relative max-[964px]:h-auto">
             <div className="relative">
               <div className="w-[100vw] max-h-[100vh] aspect-video  bg-slate-800">
-                { data && 
+                {data.backdrop_path ?
                 <img
                   className="w-full h-full object-fill"
                   src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`}
-                />
+                  alt="movie pic"
+                  />
+                  :
+                  <div className="h-full flexCenter"><Loader/></div>
               }
               </div>
-              <div className="absolute shadow-2xl  bg-gray-800 w-[25vw] min-h-[37vw] gg:right-[10%] right-[5%] min-[1600px]:w-[450px] max-[960px]:w-[200px] max-[960px]:bottom-[-100px] max-[500px]:w-[150px] max-[400px]:w-[35%] bottom-20">
-            { data &&
+              <div className="absolute shadow-2xl flexCenter bg-gray-800 w-[25vw] min-h-[37vw] gg:right-[10%] right-[5%] min-[1600px]:w-[450px] max-[960px]:w-[200px] max-[960px]:bottom-[-100px] max-[500px]:w-[150px] max-[400px]:w-[35%] bottom-20">
+            { data.poster_path ?
                 <img
                   className="w-full h-full object-fill"
                   src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`}
+                  alt="movei pic"
                 />
+                :
+                <div className="h-full flexCenter"><Loader/></div>
           }
               </div>
             </div>
@@ -230,7 +228,7 @@ const Detail = () => {
               {data.name && (
                 <div className="min-w-2 place-self-stretch ">
                   <h2 className="text-mywhite text-[23px]">Seasons</h2>
-                  <ShowMore h={"max-h-[245px]"}>
+                  <ShowMore h={"h-[245px]"}>
                     {data.seasons.map((season, index) => {
                       return (
                         <div key={index}>

@@ -15,7 +15,7 @@ const ShowMore = ({h, children}) => {
      
   return (
     <div>
-     <div ref={show} className={`${more?`h-auto`:`${h}` } customOverflow`}>{children}</div>
+     <div ref={show} className={`${more?`h-full`:`${h}` }  overflow-hidden`}>{children}</div>
       <div className={`w-full text-right text-blue-400 ${show?.current && (show.current.clientHeight<244?'hidden':'')}`}> <span className=" cursor-pointer select-none" onClick={handleClick}>{`${more?'show less...':'show more...'}`}</span></div>
      </div>
   )

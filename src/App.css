@@ -160,10 +160,6 @@ a:hover{
     }
 }
 
-.customOverflow{
-    overflow:hidden;
-    text-overflow: ellipsis;
-}
 
 /*mylist card*/
 

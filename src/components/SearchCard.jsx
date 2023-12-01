@@ -10,7 +10,7 @@ const SearchCard = ({data , windowWidth}) => {
              setDetail.setdetail(data.id , 'T');
          else
              setDetail.setdetail(data.id , 'M');
-           navigate(`/${ data.id}?cat=${ data.name?"T":"M"}`); 
+           navigate(`/${ data.name?"T":"M"}/${ data.id}`); 
       };
 
   return (

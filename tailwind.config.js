@@ -21,6 +21,7 @@ export default {
     },
     screens:{
       'gg': '960px',
+      'sm': '400px',
 },
   },
   plugins: [],

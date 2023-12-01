@@ -15,7 +15,8 @@ import {AiFillHome} from 'react-icons/ai';
 import{FaTv} from 'react-icons/fa';
 import {BiCameraMovie} from 'react-icons/bi';
 import {AiOutlinePlus, AiOutlineArrowLeft}  from 'react-icons/ai';
-import { useParams, } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
 
 const Navbar = () => {
     const {name} = useParams();
@@ -26,6 +27,7 @@ const Navbar = () => {
     const location = useLocation();
     const isActiveLink = (to)=>{
         return !!(location.pathname===to);
+        console.log(location.pathname)
     }
 
     useEffect(()=>{
@@ -66,13 +68,11 @@ const Navbar = () => {
            <li><Link to="/home" >Home</Link></li>
            <li><Link to="/tvShows">Tv Shows</Link></li>
            <li> <Link to="/movies" > Movies</Link></li>
-           <li> <Link to="/recentlyAdded" > Recently Added</Link></li>
            <li> <Link to="/myList" > My List</Link></li>
         </ul>
          <div className='text-white flex items-center cursor-pointer text-wt'> 
-                <Link to='/search'>< FiSearch /></Link>
-               <h1 className='text-red-900 line-through  max-[425px]:hidden m-4 cursor-pointer text-wt'>Kids</h1>
-               <h1 className='text-red-900 line-through  max-[425px]:hidden m-4 cursor-pointer text-wt '>DVD</h1>
+                <Link to='/search' className="text-white text-[25px] mr-3">< FiSearch /></Link>
+             
               <div className=' select-none m-4 text-white text-[25px] flex flex-col items-center' onClick={()=>setDrop(!drop)}>
                   <div className='flex justify-items-center'> <motion.img className='h-8' src={Profile} alt="profile-logo" /> <RiArrowDropDownFill className={`${drop?'rotate-180':'rotate-0'}`} /> </div>
                    <div className={` ${drop? 'flex': 'hidden'} flex-col bg-[rgba(0,0,0,0.8)] backdrop-blur-lg absolute top-[100px] right-[10px] z-2`}>

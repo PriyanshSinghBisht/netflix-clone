@@ -19,7 +19,7 @@ const MyListCard = ({id, cat ,handleChangeList}) => {
  const navigate  = useNavigate();
  const  handleClick = ()=>{
     setDetail.setdetail(data.id , cat);
-    navigate(`/${ data.id}?cat=${ cat }`);
+    navigate(`/${ cat }/${ data.id}`);
 };
 
        useEffect(()=>{   
