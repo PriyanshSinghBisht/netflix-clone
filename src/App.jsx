@@ -7,7 +7,7 @@ import RecentyAdded from './pages/RecentyAdded';
 import MyList from './pages/MyList';
 import Search from './pages/Search';
 import Detail from './pages/Detail';
-import {Route ,HashRouter, Routes} from 'react-router-dom';
+import {Route, Routes, BrowserRouter} from 'react-router-dom';
 import { DetailProvider } from './components/DP';
 
 
@@ -19,7 +19,7 @@ const App = () =>{
     //  localStorage.clear();
   
   return (
-    <HashRouter basename='/'>
+    <BrowserRouter basename='/'>
       <DetailProvider>
 
       <div className='w-full bg-black'>
@@ -37,7 +37,7 @@ const App = () =>{
     </div>
     </div>
       </DetailProvider>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 

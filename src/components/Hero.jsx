@@ -9,7 +9,7 @@ const Hero = () => {
   const navigate = useNavigate();
     const handleplay =()=>{
                 setDetail.setdetail(66732 , 'T');
-                navigate(`/${ 66732}?cat=T`); 
+                navigate('/T/66732'); 
          };
   return (
     <div className='relative select-none'>

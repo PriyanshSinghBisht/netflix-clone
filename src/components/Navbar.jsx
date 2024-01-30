@@ -80,7 +80,7 @@ const Navbar = () => {
                         <a href="#" className='text-red-900 line-through flex text-[18px] items-center p-2'> < AiOutlineUser className='mr-4 font-bold h-7 w-auto'/> <span>Account</span> </a>
                         <a href="#" className=' text-red-900 line-through  flex text-[18px] items-center p-2'> < HiOutlineQuestionMarkCircle className='mr-4 font-bold h-7 w-auto'/> <span>Help Center</span> </a>
                         <hr className='color-dim'/>
-                        <a href="/netflix-clone/" className='flex text-[18px] items-center p-3 text-center'> <span>Sign out of Netflix</span> </a>
+                        <a href="/" className='flex text-[18px] items-center p-3 text-center'> <span>Sign out of Netflix</span> </a>
                    </div>
               </div>
          </div>
