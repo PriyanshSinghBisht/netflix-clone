@@ -39,7 +39,7 @@ const MovieCard = ({movie}) => {
                     ' onClick={handleClick}>
                          <div className='w-full h-full absolute top-0 left-0 group-hover:bg-[rgba(0,0,0,0.2)]' />
                          <div className='gg:h-[180px] min-[700px]:h-[250px] gg:w-[300px] min-[700px]:w-[200px] min-[500px]:w-[150px] min-[500px]:h-[200px] w-[120px] h-[150px]'>
-                          <img className='w-full h-full' src={`https://image.tmdb.org/t/p/w500/${(windowWidth>960)?movie.backdrop_path:movie.poster_path}`} />
+                          <img className='w-full h-full' src={`https://image.tmdb.org/t/p/${(windowWidth>960)?'w1280':'w500'}/${(windowWidth>960)?movie.backdrop_path:movie.poster_path}`} />
                          </div>
                          <div className='movie_poster w-full'>
                              <h1 className=' font-black mt-2 mr-2 max-[500px]:text-[13px] whitespace-nowrap overflow-hidden overflow-ellipsis text-white shadow-wt w-full'>{movie.title? movie.title: movie.name} </h1>
