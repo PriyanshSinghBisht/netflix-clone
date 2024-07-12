@@ -36,7 +36,7 @@ const CardGrid = ({data , cat }) => {
          <span className="text-mywhite max-[450px]:text-[10px]">{data.release_date? data.release_date : data.first_air_date }</span>
      </div> 
     <div className="gg:h-auto max-[450px]:aspect-1/1.8 min-[450px]:h-[200px] h-auto">
-    <img className='w-full h-full' src={`https://image.tmdb.org/t/p/w500/${(windowWidth>960)?data.backdrop_path:data.poster_path}`} />
+    <img className='w-full h-full' src={`https://image.tmdb.org/t/p/w1280/${(windowWidth>960)?data.backdrop_path:data.poster_path}`} />
      </div>
   </div>
   )
