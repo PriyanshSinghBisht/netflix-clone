@@ -118,7 +118,7 @@ const Detail = (props) => {
                 {data.backdrop_path ?
                 <img
                   className="w-full h-full object-fill"
-                  src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`}
+                  src={`https://image.tmdb.org/t/p/original/${data.backdrop_path}`}
                   alt="movie pic"
                   />
                   :
