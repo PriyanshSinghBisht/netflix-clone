@@ -1,7 +1,6 @@
 import CardGrid from "./CardGrid";
 import { useState } from "react";
 import {GrClose} from 'react-icons/gr';
-import Loader from '../Loader/Loader'
 
 const GridList = ({caption, Data , cat}) => {
 console.log(Data);
@@ -21,8 +20,7 @@ console.log(Data);
                         )
                     }})
                  }
-             </div>
-             <Loader />
+              </div>
     </div>
   )
 }

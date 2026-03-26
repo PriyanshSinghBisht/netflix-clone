@@ -15,9 +15,9 @@ const FAQ = ({heading, content}) => {
                    </div>
                     <motion.div animate={{height: toogle?'auto':0}} transition={{type:"spring", duration:0.1 }} className={`overflow-hidden duration-75`}>
                           { 
-                            content.map((para)=>{
+                            content.map((para, index)=>{
                                 return(
-                                    <h1 className=' flex-1 p-4 text-start gg:text-[20px] text-[18px] my-1 text-white'> {para}</h1>
+                                    <h1 key={index} className=' flex-1 p-4 text-start gg:text-[20px] text-[18px] my-1 text-white'> {para}</h1>
                                 )})
                           }
                     </motion.div>

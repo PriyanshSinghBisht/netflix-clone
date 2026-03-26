@@ -1,12 +1,27 @@
-import { RiLoader4Fill } from "react-icons/ri";
+import SkeletonLoader from './SkeletonLoader';
 
 const Loader = () => {
   return (
-    <div className='w-full flexCenter py-20'>
-        <RiLoader4Fill className="sm:w-[100px] sm:h-[100px] w-[50px] h-[50px] text-white/30
-        animate-rotate" />
+    <div className='w-full py-20 flex justify-center'>
+      <div className='flex gap-4 flex-wrap justify-center max-w-4xl'>
+        <div className='flex flex-col gap-2'>
+          <SkeletonLoader className='w-[300px] h-[180px] rounded-lg' />
+          <SkeletonLoader className='w-[300px] h-4 rounded' />
+          <SkeletonLoader className='w-[250px] h-3 rounded' />
+        </div>
+        <div className='flex flex-col gap-2'>
+          <SkeletonLoader className='w-[300px] h-[180px] rounded-lg' />
+          <SkeletonLoader className='w-[300px] h-4 rounded' />
+          <SkeletonLoader className='w-[250px] h-3 rounded' />
+        </div>
+        <div className='flex flex-col gap-2'>
+          <SkeletonLoader className='w-[300px] h-[180px] rounded-lg' />
+          <SkeletonLoader className='w-[300px] h-4 rounded' />
+          <SkeletonLoader className='w-[250px] h-3 rounded' />
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Loader
+export default Loader;

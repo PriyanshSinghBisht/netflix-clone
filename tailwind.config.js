@@ -11,11 +11,17 @@ export default {
       },
       animation:{
         rotate: 'rotate 1s linear infinite',
+        skeleton: 'skeleton 1.5s ease-in-out infinite',
       },
       keyframes:{
          rotate:{
            from:{rotate: '0deg'},
            to: {rotate: '360deg'}
+         },
+         skeleton:{
+           '0%': {opacity: '0.3'},
+           '50%': {opacity: '0.7'},
+           '100%': {opacity: '0.3'},
          },
       }
     },
