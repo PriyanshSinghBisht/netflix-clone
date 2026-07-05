@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -7,7 +7,9 @@ import MovieList from "../components/MovieList";
 import CastCard from "../components/CastCard";
 import ShowMore from "../components/ShowMore";
 import SkeletonLoader from '../Loader/SkeletonLoader';
+import { FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useMovieDetails, useMovieVideos, useMovieRecommendations, useMovieCredits, useMovieImages, useSimilarMovies } from '../hooks/useApi';
+import { Button, Badge } from '../components/ui';
 
 const Detail = () => {
   const { id, cat } = useParams();
@@ -17,6 +19,9 @@ const Detail = () => {
   const [backdropLoaded, setBackdropLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false);
   const [showAllImages, setShowAllImages] = useState(false);
+  const [lightbox, setLightbox] = useState({ open: false, index: 0, images: [], type: '' });
+  const backdropRef = useRef(null);
+  const posterRef = useRef(null);
 
   const { data: data, isLoading } = useMovieDetails(id, cat);
   const { data: ytData } = useMovieVideos(id, cat);
@@ -68,6 +73,45 @@ const Detail = () => {
     return hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
   };
 
+  const openLightbox = (images, index, type) => {
+    setLightbox({ open: true, index, images, type });
+  };
+
+  const closeLightbox = () => {
+    setLightbox({ open: false, index: 0, images: [], type: '' });
+  };
+
+  const prevLightbox = () => {
+    setLightbox(prev => ({
+      ...prev,
+      index: prev.index === 0 ? prev.images.length - 1 : prev.index - 1,
+    }));
+  };
+
+  const nextLightbox = () => {
+    setLightbox(prev => ({
+      ...prev,
+      index: prev.index === prev.images.length - 1 ? 0 : prev.index + 1,
+    }));
+  };
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (!lightbox.open) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') prevLightbox();
+      if (e.key === 'ArrowRight') nextLightbox();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [lightbox.open]);
+
+  const scrollCarousel = (ref, direction) => {
+    if (ref.current) {
+      ref.current.scrollBy({ left: direction * 600, behavior: 'smooth' });
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="bg-[#333]">
@@ -96,7 +140,7 @@ const Detail = () => {
         className="relative max-[964px]:h-auto"
       >
         <div className="relative">
-          <div className="w-[100vw] max-h-[100vh] aspect-video bg-slate-800 overflow-hidden">
+          <div className="w-[100vw] max-h-[100vh] aspect-video bg-slate-800 overflow-hidden relative z-0">
             {data?.backdrop_path ? (
               <>
                 {!backdropLoaded && <SkeletonLoader className="w-full h-full" />}
@@ -117,11 +161,13 @@ const Detail = () => {
             )}
           </div>
           
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent z-5" />
+          
           <motion.div
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="absolute shadow-2xl flexCenter bg-gray-800 w-[25vw] min-h-[37vw] gg:right-[10%] right-[5%] min-[1600px]:w-[450px] max-[960px]:w-[200px] max-[960px]:bottom-[-100px] max-[500px]:w-[150px] max-[400px]:w-[35%] bottom-20 rounded-lg overflow-hidden"
+            className="absolute shadow-2xl flexCenter bg-gray-800 w-[25vw] min-h-[37vw] gg:right-[10%] right-[5%] min-[1600px]:w-[450px] max-[960px]:w-[180px] max-[960px]:bottom-[-80px] max-[500px]:w-[140px] max-[400px]:w-[35%] bottom-16 rounded-lg overflow-hidden z-20"
           >
             {data?.poster_path ? (
               <>
@@ -148,7 +194,7 @@ const Detail = () => {
           initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="gg:pl-[10%] px-5 pt-5 flex-1 pb-10 bg-left-black flex justify-center flex-col text-white gg:absolute left-0 right-[40vw] gg:top-0 top-1/2 h-1/2 gg:h-full"
+          className="gg:pl-[10%] px-5 pt-5 flex-1 pb-10 bg-left-black flex justify-center flex-col text-white gg:absolute left-0 right-[40vw] gg:top-0 top-1/2 h-1/2 gg:h-full z-10"
         >
           <motion.h1
             initial={{ y: 20, opacity: 0 }}
@@ -166,9 +212,9 @@ const Detail = () => {
             className="flex flex-wrap items-center gap-3 my-3 text-[#ccc] font-bold text-[16px] relative"
           >
             {data?.release_date && (
-              <span className="bg-gray-700 px-2 py-1 rounded text-sm">
+              <Badge variant="default" size="md">
                 {data.release_date.split('-')[0]}
-              </span>
+              </Badge>
             )}
             
             {data?.runtime && (
@@ -210,19 +256,14 @@ const Detail = () => {
             transition={{ delay: 0.8 }}
             className="flex my-5 gap-4"
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Button
+              variant={addBtn ? 'outline' : 'primary'}
+              size="lg"
               onClick={handleAddToList}
-              className={`border-2 p-2 ${
-                addBtn ? "bg-transparent text-white border-white" : "bg-white text-black border-white"
-              } text-[20px] rounded-lg`}
+              iconRight={<span className="text-lg">{!addBtn ? "+" : "−"}</span>}
             >
-              MY LIST{" "}
-              <span className="inline-block mx-3 text-[20px]">
-                {!addBtn ? "+" : "−"}
-              </span>
-            </motion.button>
+              MY LIST
+            </Button>
           </motion.div>
         </motion.div>
       </motion.div>
@@ -342,34 +383,55 @@ const Detail = () => {
             viewport={{ once: true }}
             className="mt-8"
           >
-            <h2 className="text-white text-2xl font-bold mb-5 pl-2 border-l-4 border-red-500">
-              Backdrops
-            </h2>
-            <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hidden">
-              {backdrops.slice(0, showAllImages ? backdrops.length : 10).map((img, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="flex-shrink-0"
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-white text-2xl font-bold pl-2 border-l-4 border-red-500">
+                Backdrops
+              </h2>
+              {backdrops.length > 10 && (
+                <button
+                  onClick={() => setShowAllImages(!showAllImages)}
+                  className="text-red-400 hover:text-red-300 text-sm font-medium"
                 >
-                  <img
-                    className="w-[400px] h-[225px] object-cover rounded-lg cursor-pointer hover:scale-105 transition-transform"
-                    src={`https://image.tmdb.org/t/p/original/${img.file_path}`}
-                    alt={`backdrop ${index}`}
-                  />
-                </motion.div>
-              ))}
+                  {showAllImages ? 'Show Less' : `Show All (${backdrops.length})`}
+                </button>
+              )}
             </div>
-            {backdrops.length > 10 && (
+            <div className="relative group">
               <button
-                onClick={() => setShowAllImages(!showAllImages)}
-                className="mt-3 text-red-500 hover:text-red-400 font-bold"
+                onClick={() => scrollCarousel(backdropRef, -1)}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white p-2 rounded-r-lg opacity-0 group-hover:opacity-100 transition-opacity"
               >
-                {showAllImages ? 'Show Less' : `Show All (${backdrops.length})`}
+                <FiChevronLeft className="w-5 h-5" />
               </button>
-            )}
+              <div
+                ref={backdropRef}
+                className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide"
+                style={{ scrollBehavior: 'smooth' }}
+              >
+                {(showAllImages ? backdrops : backdrops.slice(0, 10)).map((img, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex-shrink-0 cursor-pointer"
+                    onClick={() => openLightbox(backdrops, index, 'backdrop')}
+                  >
+                    <img
+                      className="w-[400px] h-[225px] object-cover rounded-lg hover:ring-2 hover:ring-red-500/50 transition-all duration-200"
+                      src={`https://image.tmdb.org/t/p/original/${img.file_path}`}
+                      alt={`backdrop ${index}`}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+              <button
+                onClick={() => scrollCarousel(backdropRef, 1)}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white p-2 rounded-l-lg opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <FiChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </motion.div>
         )}
 
@@ -380,25 +442,54 @@ const Detail = () => {
             viewport={{ once: true }}
             className="mt-8"
           >
-            <h2 className="text-white text-2xl font-bold mb-5 pl-2 border-l-4 border-blue-500">
-              Posters
-            </h2>
-            <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hidden">
-              {posters.slice(0, showAllImages ? posters.length : 10).map((img, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="flex-shrink-0"
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-white text-2xl font-bold pl-2 border-l-4 border-blue-500">
+                Posters
+              </h2>
+              {posters.length > 10 && (
+                <button
+                  onClick={() => setShowAllImages(!showAllImages)}
+                  className="text-blue-400 hover:text-blue-300 text-sm font-medium"
                 >
-                  <img
-                    className="w-[200px] h-[300px] object-cover rounded-lg cursor-pointer hover:scale-105 transition-transform"
-                    src={`https://image.tmdb.org/t/p/w500/${img.file_path}`}
-                    alt={`poster ${index}`}
-                  />
-                </motion.div>
-              ))}
+                  {showAllImages ? 'Show Less' : `Show All (${posters.length})`}
+                </button>
+              )}
+            </div>
+            <div className="relative group">
+              <button
+                onClick={() => scrollCarousel(posterRef, -1)}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white p-2 rounded-r-lg opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <FiChevronLeft className="w-5 h-5" />
+              </button>
+              <div
+                ref={posterRef}
+                className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide"
+                style={{ scrollBehavior: 'smooth' }}
+              >
+                {(showAllImages ? posters : posters.slice(0, 10)).map((img, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex-shrink-0 cursor-pointer"
+                    onClick={() => openLightbox(posters, index, 'poster')}
+                  >
+                    <img
+                      className="w-[200px] h-[300px] object-cover rounded-lg hover:ring-2 hover:ring-blue-500/50 transition-all duration-200"
+                      src={`https://image.tmdb.org/t/p/w500/${img.file_path}`}
+                      alt={`poster ${index}`}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+              <button
+                onClick={() => scrollCarousel(posterRef, 1)}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white p-2 rounded-l-lg opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <FiChevronRight className="w-5 h-5" />
+              </button>
             </div>
           </motion.div>
         )}
@@ -412,14 +503,13 @@ const Detail = () => {
           >
             <h1 className="text-white pl-2 border-l-4 ml-2 mt-4 mb-2 f9 border-l-blue-700 text-[30px]">Cast</h1>
             <div className="relative flex items-center">
-              <button
-                className="cast-scroll-btn left-0"
+              <Button
+                variant="ghost"
+                size="sm"
+                className="absolute left-0 z-10 bg-black/70 hover:bg-black/90 rounded-full w-10 h-10 p-0 flex items-center justify-center"
                 onClick={() => document.getElementById('cast-container').scrollLeft -= 300}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
+                iconLeft={<FiChevronLeft className="w-5 h-5" />}
+              />
               <div
                 id="cast-container"
                 className="flex w-full overflow-x-auto scrollbar-hide py-4 gap-2 px-2"
@@ -437,14 +527,13 @@ const Detail = () => {
                   </motion.div>
                 ))}
               </div>
-              <button
-                className="cast-scroll-btn right-0"
+              <Button
+                variant="ghost"
+                size="sm"
+                className="absolute right-0 z-10 bg-black/70 hover:bg-black/90 rounded-full w-10 h-10 p-0 flex items-center justify-center"
                 onClick={() => document.getElementById('cast-container').scrollLeft += 300}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+                iconLeft={<FiChevronRight className="w-5 h-5" />}
+              />
             </div>
           </motion.div>
         )}
@@ -511,6 +600,54 @@ const Detail = () => {
       <div className="bg-[#222]">
         <Footer />
       </div>
+
+      <AnimatePresence>
+        {lightbox.open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center"
+            onClick={closeLightbox}
+          >
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 text-white/80 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors z-10"
+            >
+              <FiX className="w-6 h-6" />
+            </button>
+
+            <button
+              onClick={(e) => { e.stopPropagation(); prevLightbox(); }}
+              className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 text-white/80 hover:text-white p-3 rounded-full hover:bg-white/10 transition-colors z-10"
+            >
+              <FiChevronLeft className="w-8 h-8" />
+            </button>
+
+            <motion.img
+              key={lightbox.index}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.2 }}
+              className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg"
+              src={`https://image.tmdb.org/t/p/original/${lightbox.images[lightbox.index]?.file_path}`}
+              alt={`${lightbox.type} ${lightbox.index + 1}`}
+              onClick={(e) => e.stopPropagation()}
+            />
+
+            <button
+              onClick={(e) => { e.stopPropagation(); nextLightbox(); }}
+              className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 text-white/80 hover:text-white p-3 rounded-full hover:bg-white/10 transition-colors z-10"
+            >
+              <FiChevronRight className="w-8 h-8" />
+            </button>
+
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm font-medium bg-black/50 px-4 py-2 rounded-full">
+              {lightbox.index + 1} / {lightbox.images.length}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

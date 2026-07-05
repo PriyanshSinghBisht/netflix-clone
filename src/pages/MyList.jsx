@@ -4,6 +4,7 @@ import {AiOutlinePlus} from 'react-icons/ai';
 import {Link} from 'react-router-dom'
 import { useEffect, useState } from "react";
 import MyListCard from "../components/MyListCard";
+import { Button } from '../components/ui';
 
 const MyList = () => {
    const [movies, setMovies] = useState( JSON.parse(localStorage.getItem("myMovieList")));
@@ -32,18 +33,20 @@ const MyList = () => {
 
      <div className="flex justify-between">
       <h2 className='ml-5 gg:text-[40px] min-[500px]:text-[35px] text-[30px] font-black text-white'>My List </h2>
-       <button className=" underline text-red-600 mr-10" onClick={handleClearData}>clear All</button>
+       <Button variant="ghost" size="sm" onClick={handleClearData} className="mr-5 gg:mr-10 text-red-400">Clear All</Button>
       </div>
 
-       <div>
-         <Link to='/movies'>
-          <div className=" pl-2 min-[700px]:mx-10 mx-4 mt-10 border-white text-white hover:bg-[rgba(255,255,255,0.2)] 
-           hover:border-black border-2 rounded-lg flex justify-start items-center">
-            <AiOutlinePlus className="min-[700px]:text-[25px] text-[23px]"/>
-            <h2 className=" font-bold min-[700px]:text-[20px] text-[15px] text-center"> Movies</h2>
-             </div>
-          </Link>
-       </div>
+       <Link to='/movies' className="block min-[700px]:mx-10 mx-4 mt-10">
+         <Button
+           variant="outline"
+           size="lg"
+           fullWidth
+           iconLeft={<AiOutlinePlus className="w-5 h-5" />}
+           className="justify-start"
+         >
+           Add Movies
+         </Button>
+       </Link>
 
          {movies &&
             <div className="grid min-[1110px]:grid-cols-7 min-[800px]:grid-cols-5 min-[600px]:grid-cols-4 grid-cols-3 gg:mx-10 mx-5 max-[600px]:mx-2 mt-5">{
@@ -56,15 +59,17 @@ const MyList = () => {
             </div>
          }
 
-       <div>
-         <Link to='/tvShows'>
-          <div className=" pl-2 min-[700px]:mx-10 mx-4 mt-10 border-white text-white hover:bg-[rgba(255,255,255,0.2)]
-           hover:border-black border-2 rounded-lg flex justify-start items-center">
-            <AiOutlinePlus className="min-[700px]:text-[25px] text-[23px]"/>
-            <h2 className=" font-bold min-[700px]:text-[20px] text-[15px] text-center"> Tv Series</h2>
-             </div>
-          </Link>
-       </div>
+       <Link to='/tvShows' className="block min-[700px]:mx-10 mx-4 mt-10">
+         <Button
+           variant="outline"
+           size="lg"
+           fullWidth
+           iconLeft={<AiOutlinePlus className="w-5 h-5" />}
+           className="justify-start"
+         >
+           Add TV Series
+         </Button>
+       </Link>
        
           {Tv &&
             <div className="grid min-[1110px]:grid-cols-7 min-[800px]:grid-cols-5 min-[600px]:grid-cols-4 grid-cols-3 gg:mx-10 mx-5 max-[600px]:mx-2 mt-5">{

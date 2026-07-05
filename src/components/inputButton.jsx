@@ -1,30 +1,37 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { Input, Button } from "./ui";
 
-const InputButton = ({bg}) => {
-
-  const myref = useRef(null);
-    const handlefocus = ()=>{
-         myref.current.focus();
-    }
+const InputButton = () => {
   return (
     <div>
-    <p className='text-white text-center gg:text-[18px] text-[15px] gg:my-0 my-5 mx-4'> Ready to watch? Enter your email to create or restart your membership.</p>
-       <div className='mx-10 flex  justify-center items-center overflow-hidden my-4' onClick={handlefocus}>
-       <form >  
-           <div className="flex min-[600px]:flex-row flex-col min-[600px]:w-[500px] w-full">
-              <div className='relative flex-1 min-[600px]:w-auto w-full'>
-                  <input ref={myref} name="email" required className={`flex-1 ${bg} input rounded-[5px] text-[15px] bg-transparent bd-white pt-4 pb-2 pl-3 pr-10 w-full`} type="text"/>
-           
-                   <label className={`label text-[rgba(250,250,250,0.8)] select-none absolute top-[20%] left-[20px]`} htmlFor="Email address">Email address</label>
-               </div>
-              <Link to="/home"><button className='w-fit self-center   min-[600px]:mt-0 mt-4 text-white bg-[#E50914] h-full py-2 px-4 mx-2 rounded-[7px] text-[22px] font-semibold hover:bg-red-700'>Get Started &gt;</button></Link> 
+      <p className="text-text-secondary text-center text-sm gg:text-base gg:my-0 my-5 mx-4">
+        Ready to watch? Enter your email to create or restart your membership.
+      </p>
+      <div className="mx-4 gg:mx-10 flex justify-center items-center my-4">
+        <form className="w-full max-w-[600px]">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-0">
+            <div className="flex-1">
+              <Input
+                label="Email address"
+                type="text"
+                name="email"
+                required
+              />
             </div>
-            </form>
-       </div>
-</div>
-    
-  )
-}
+            <Link to="/home" className="sm:-ml-px">
+              <Button
+                variant="primary"
+                size="lg"
+                className="w-full sm:w-auto h-[42px] rounded-lg sm:rounded-l-none px-6 text-base font-semibold"
+              >
+                Get Started &gt;
+              </Button>
+            </Link>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-export default InputButton
+export default InputButton;

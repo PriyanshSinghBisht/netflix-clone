@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import { useTrending, usePopularMovies, useDiscover } from '../hooks/useApi';
 
 const Home = () => {
-  const { data: forYouData } = useTrending('tv', 'airing_today');
+  const { data: forYouData } = useTrending('tv', 'week');
   const { data: popularData } = usePopularMovies(1);
   const { data: trendingData } = useDiscover('movie', { sortBy: 'vote_average.desc', page: 1 });
   const { data: tvData } = useDiscover('tv', { sortBy: 'popularity.desc', page: 1 });

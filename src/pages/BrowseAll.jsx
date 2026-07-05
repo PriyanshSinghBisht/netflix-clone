@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { fetchMovies, fetchGenres, setFilter, clearFilters, setPage } from '../store/contentSlice';
@@ -7,14 +7,15 @@ import MovieCard from '../components/MovieCard';
 import Footer from '../components/Footer';
 import Pagination from '../components/Pagination';
 import SkeletonLoader from '../Loader/SkeletonLoader';
-import { FiFilter, FiX } from 'react-icons/fi';
+import { FiFilter, FiX, FiFilm, FiGrid, FiCalendar } from 'react-icons/fi';
+import { RiArrowUpDownLine } from 'react-icons/ri';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Select, Badge, Button } from '../components/ui';
 
 const BrowseAll = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const { currentContent, moviesGenres, tvGenres, filter, pagination, loading } = useSelector((state) => state.content);
-  const [showFilters, setShowFilters] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const urlPage = parseInt(searchParams.get('page') || '1', 10);
@@ -94,16 +95,6 @@ const BrowseAll = () => {
     dispatch(setFilter({ [key]: value }));
   };
 
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= pagination.totalPages) {
-      const newParams = new URLSearchParams(searchParams);
-      newParams.set('page', newPage.toString());
-      setSearchParams(newParams);
-      dispatch(setPage(newPage));
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
   const activeFiltersCount = [filter.type !== 'all', filter.genre, filter.year, filter.sortBy !== 'popularity.desc'].filter(Boolean).length;
 
   const getTitle = () => {
@@ -112,74 +103,98 @@ const BrowseAll = () => {
     return 'Browse All';
   };
 
+  const filterOptions = [
+    {
+      label: 'Type',
+      icon: <FiFilm className="w-4 h-4" />,
+      value: filter.type,
+      options: [
+        { value: 'all', label: 'All Content' },
+        { value: 'movie', label: 'Movies' },
+        { value: 'tv', label: 'TV Shows' },
+      ],
+      onChange: (val) => handleFilterChange('type', val),
+    },
+    {
+      label: 'Genre',
+      icon: <FiGrid className="w-4 h-4" />,
+      value: filter.genre || '',
+      options: [
+        { value: '', label: 'All Genres' },
+        ...genres.map(g => ({ value: g.id, label: g.name })),
+      ],
+      onChange: (val) => handleFilterChange('genre', val ? Number(val) : null),
+    },
+    {
+      label: 'Year',
+      icon: <FiCalendar className="w-4 h-4" />,
+      value: filter.year || '',
+      options: [
+        { value: '', label: 'All Years' },
+        ...years.map(y => ({ value: y, label: String(y) })),
+      ],
+      onChange: (val) => handleFilterChange('year', val ? Number(val) : null),
+    },
+    {
+      label: 'Sort By',
+      icon: <RiArrowUpDownLine className="w-4 h-4" />,
+      value: filter.sortBy,
+      options: sortOptions,
+      onChange: (val) => handleFilterChange('sortBy', val),
+    },
+  ];
+
   return (
-    <div className="flex flex-col bg-zinc-900 min-h-screen pt-16">
+    <div className="flex flex-col bg-zinc-900 min-h-screen pt-24">
       <Navbar />
       
-      <div className="px-4 pb-2 flex items-center justify-between">
-        <h1 className="text-white text-2xl font-bold">{getTitle()}</h1>
-        <button 
+      <div className="px-4 pb-3 flex items-center justify-between">
+        <h1 className="text-text-primary text-2xl font-bold">{getTitle()}</h1>
+        <Button
+          variant="primary"
+          size="md"
           onClick={() => setShowMobileFilters(!showMobileFilters)}
-          className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+          className="md:hidden"
+          iconLeft={<FiFilter className="w-4 h-4" />}
         >
-          <FiFilter /> Filters {activeFiltersCount > 0 && <span className="bg-white text-red-600 rounded-full px-2 text-sm">{activeFiltersCount}</span>}
-        </button>
+          Filters
+          {activeFiltersCount > 0 && (
+            <Badge variant="primary" size="sm" className="ml-1">{activeFiltersCount}</Badge>
+          )}
+        </Button>
       </div>
 
       {/* Filter Panel - Desktop */}
-      <div className="hidden md:flex px-4 pb-4 gap-4 flex-wrap items-center">
-        <select
-          value={filter.type}
-          onChange={(e) => handleFilterChange('type', e.target.value)}
-          className="bg-zinc-800 text-white px-4 py-2 rounded-lg border border-zinc-700 focus:border-red-600 focus:outline-none"
-        >
-          <option value="all">All Content</option>
-          <option value="movie">Movies</option>
-          <option value="tv">TV Shows</option>
-        </select>
-
-        <select
-          value={filter.genre || ''}
-          onChange={(e) => handleFilterChange('genre', e.target.value ? Number(e.target.value) : null)}
-          className="bg-zinc-800 text-white px-4 py-2 rounded-lg border border-zinc-700 focus:border-red-600 focus:outline-none"
-        >
-          <option value="">All Genres</option>
-          {genres.map((g) => (
-            <option key={g.id} value={g.id}>{g.name}</option>
-          ))}
-        </select>
-
-        <select
-          value={filter.year || ''}
-          onChange={(e) => handleFilterChange('year', e.target.value ? Number(e.target.value) : null)}
-          className="bg-zinc-800 text-white px-4 py-2 rounded-lg border border-zinc-700 focus:border-red-600 focus:outline-none"
-        >
-          <option value="">All Years</option>
-          {years.map((y) => (
-            <option key={y} value={y}>{y}</option>
-          ))}
-        </select>
-
-        <select
-          value={filter.sortBy}
-          onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-          className="bg-zinc-800 text-white px-4 py-2 rounded-lg border border-zinc-700 focus:border-red-600 focus:outline-none"
-        >
-          {sortOptions.map((opt) => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
-
+      <div className="hidden md:flex px-4 pb-6 gap-3 flex-wrap items-center">
+        {filterOptions.map((opt) => (
+          <Select
+            key={opt.label}
+            label={opt.label}
+            icon={opt.icon}
+            value={opt.value}
+            options={opt.options}
+            onChange={opt.onChange}
+            className="min-w-[150px]"
+          />
+        ))}
         {activeFiltersCount > 0 && (
-          <button
-            onClick={() => {
-              setSearchParams(new URLSearchParams());
-              dispatch(clearFilters());
-            }}
-            className="text-red-500 hover:text-red-400 flex items-center gap-1"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
           >
-            <FiX /> Clear Filters
-          </button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setSearchParams(new URLSearchParams());
+                dispatch(clearFilters());
+              }}
+              iconLeft={<FiX className="w-4 h-4" />}
+              className="text-red-400 hover:text-red-300"
+            >
+              Clear
+            </Button>
+          </motion.div>
         )}
       </div>
 
@@ -190,72 +205,31 @@ const BrowseAll = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden px-4 pb-4 space-y-4"
+            className="md:hidden px-4 pb-6 space-y-3"
           >
-            <div className="space-y-2">
-              <label className="text-white text-sm">Type</label>
-              <select
-                value={filter.type}
-                onChange={(e) => handleFilterChange('type', e.target.value)}
-                className="w-full bg-zinc-800 text-white px-4 py-2 rounded-lg border border-zinc-700"
-              >
-                <option value="all">All Content</option>
-                <option value="movie">Movies</option>
-                <option value="tv">TV Shows</option>
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-white text-sm">Genre</label>
-              <select
-                value={filter.genre || ''}
-                onChange={(e) => handleFilterChange('genre', e.target.value ? Number(e.target.value) : null)}
-                className="w-full bg-zinc-800 text-white px-4 py-2 rounded-lg border border-zinc-700"
-              >
-                <option value="">All Genres</option>
-                {genres.map((g) => (
-                  <option key={g.id} value={g.id}>{g.name}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-white text-sm">Release Year</label>
-              <select
-                value={filter.year || ''}
-                onChange={(e) => handleFilterChange('year', e.target.value ? Number(e.target.value) : null)}
-                className="w-full bg-zinc-800 text-white px-4 py-2 rounded-lg border border-zinc-700"
-              >
-                <option value="">All Years</option>
-                {years.map((y) => (
-                  <option key={y} value={y}>{y}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-white text-sm">Sort By</label>
-              <select
-                value={filter.sortBy}
-                onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-                className="w-full bg-zinc-800 text-white px-4 py-2 rounded-lg border border-zinc-700"
-              >
-                {sortOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>{opt.label}</option>
-                ))}
-              </select>
-            </div>
-
+            {filterOptions.map((opt) => (
+              <Select
+                key={opt.label}
+                label={opt.label}
+                icon={opt.icon}
+                value={opt.value}
+                options={opt.options}
+                onChange={opt.onChange}
+              />
+            ))}
             {activeFiltersCount > 0 && (
-              <button
+              <Button
+                variant="outline"
+                size="md"
+                fullWidth
                 onClick={() => {
                   setSearchParams(new URLSearchParams());
                   dispatch(clearFilters());
                 }}
-                className="w-full bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                className="text-red-400 border-red-500/40 hover:bg-primary-muted mt-2"
               >
-                Clear Filters
-              </button>
+                Clear All Filters
+              </Button>
             )}
           </motion.div>
         )}
@@ -274,9 +248,9 @@ const BrowseAll = () => {
             ))}
           </div>
         ) : currentContent.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-64 text-white">
+          <div className="flex flex-col items-center justify-center h-64 text-text-primary">
             <p className="text-xl">No content found</p>
-            <p className="text-gray-400">Try adjusting your filters</p>
+            <p className="text-text-muted">Try adjusting your filters</p>
           </div>
         ) : (
           <div className="flex flex-wrap justify-center">
@@ -287,7 +261,6 @@ const BrowseAll = () => {
         )}
       </div>
 
-      {/* Pagination */}
       <Pagination totalPages={pagination.totalPages} />
 
       <Footer />

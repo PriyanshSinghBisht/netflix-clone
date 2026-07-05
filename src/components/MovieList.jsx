@@ -49,9 +49,9 @@ const MovieList = ({ data, caption }) => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
     >
-      <h2 className='pl-2 border-l-4 border-l-red-500 min-[500px]:mt-10 mt-5 min-[500px]:ml-10 ml-5 text-white font-black min-[800px]:text-[30px] text-[20px]'>
+      <h2 className='pl-3 border-l-4 border-l-red-500 min-[500px]:mt-10 mt-5 min-[500px]:ml-10 ml-5 text-text-primary font-bold text-xl min-[800px]:text-2xl'>
         {caption}
       </h2>
       

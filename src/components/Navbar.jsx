@@ -1,20 +1,13 @@
 import Netflix from '../assets/netflix.png';
-import { FiSearch } from "react-icons/fi";
-import { RiArrowDropDownFill } from 'react-icons/ri';
+import { FiSearch, FiMenu, FiChevronDown } from "react-icons/fi";
 import { LuPencil } from 'react-icons/lu';
-import { AiOutlineUser } from 'react-icons/ai';
-import { HiOutlineQuestionMarkCircle } from 'react-icons/hi';
+import { AiOutlineUser, AiOutlineClose, AiFillHome, AiOutlinePlus, AiOutlineArrowLeft } from 'react-icons/ai';
 import Profile from '../assets/netflix-profile.jpg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { AiOutlineClose } from 'react-icons/ai';
-import { FiMenu } from 'react-icons/fi';
-import { useEffect } from 'react';
-import { AiFillHome } from 'react-icons/ai';
 import { FaTv } from 'react-icons/fa';
 import { BiCameraMovie } from 'react-icons/bi';
-import { AiOutlinePlus, AiOutlineArrowLeft } from 'react-icons/ai';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -119,17 +112,14 @@ const Navbar = () => {
             ))}
           </ul>
           
-          <div className="text-white flex items-center cursor-pointer">
+          <div className="flex items-center gap-3">
             <Link to='/search'>
-              <motion.span
-                whileHover={{ scale: 1.2, rotate: 90 }}
-                className="text-white text-[25px] mr-3"
-              >
+              <span className="text-text-primary hover:text-text-secondary transition-colors duration-fast text-xl">
                 <FiSearch />
-              </motion.span>
+              </span>
             </Link>
             
-            <div className="select-none m-4 text-white text-[25px] flex flex-col items-center relative">
+            <div className="select-none text-white text-[25px] flex flex-col items-center relative">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 onClick={() => setDrop(!drop)}
@@ -140,7 +130,7 @@ const Navbar = () => {
                   animate={{ rotate: drop ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <RiArrowDropDownFill />
+                  <FiChevronDown />
                 </motion.div>
               </motion.div>
               

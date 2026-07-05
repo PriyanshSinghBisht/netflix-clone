@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import background from '../assets/netflix-bg.jpg';
 import netflix from '../assets/netflix.png';
 import InputButton from '../components/inputButton';
@@ -12,6 +11,7 @@ import FAQ from '../components/FAQ';
 import { faqObj } from '../components/Rawdata';
 import LangOpc from '../components/LangOpc';
 import Footer from '../components/Footer';
+import { Button } from '../components/ui';
 
 const In = () => {
   const Tv1 = 'https://netflix-images.manikantp.repl.co/Netflix1.gif';
@@ -40,9 +40,9 @@ const In = () => {
               <img className="gg:h-[45px] h-[30px]" src={netflix} alt="netflix" />
             </div>
             <LangOpc />
-            <button className="text-white bg-[#E50914] h-fit text-[12px] px-3 py-1 rounded-sm font-semibold mx-4 hover:bg-red-700">
+            <Button variant="primary" size="sm" className="mx-4">
               Sign in
-            </button>
+            </Button>
           </motion.div>
           
           <motion.div 
